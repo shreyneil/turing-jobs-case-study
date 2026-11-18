@@ -175,6 +175,9 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
 @keyframes blink { 50% { opacity: 0.3; } }
 @keyframes pop { from { transform: scale(0.97); opacity: 0.4; } to { transform: scale(1); opacity: 1; } }
 @media (max-width: 820px) { .vis { grid-template-columns: 1fr; } .vis > div + div { border-left: 0; border-top: 1px solid var(--line); } }
+#returns .two > div { scroll-margin-top: 24px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+#returns .two > div:target { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+#returns p { margin: 0; }
 </style>
 
 <div class="wrap">
@@ -480,6 +483,37 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
   </div>
 </section>
 
+<section id="returns">
+  <h2>How the expected returns were calculated</h2>
+  <p class="intro">Each priority in the PRD carries an expected return. This is the working behind each one. The inputs are my assumptions, since I do not have Turing's numbers. The two P0 items cost about 19 person-weeks together (11 + 8), a team of four for about five weeks.</p>
+  <div class="two">
+    <div id="calc-1"><span class="label">1 · P0 · Role facts on every role</span>
+      <p><strong>Not sized.</strong> Return = days saved per role × experts per role × billing per expert-day. I have none of these inputs from outside. It is likely the largest return of all. The 11 person-weeks is my build estimate.</p></div>
+    <div id="calc-2"><span class="label">2 · P0 · Match count</span>
+      <div class="calc">
+        <div class="row"><span>Visitors a month</span><b>100,000</b></div>
+        <div class="row"><span>Apply, at 5%</span><b>5,000</b></div>
+        <div class="row"><span>Miss a must-have, at 40%</span><b>2,000</b></div>
+        <div class="row"><span>Review time, at 10 minutes each</span><b>about 330 hours</b></div>
+        <div class="row total"><span>Prevented if the match count halves these</span><b>about 165 hours a month</b></div>
+      </div>
+      <p class="muted">The 8 person-weeks is my build estimate.</p></div>
+    <div id="calc-3"><span class="label">3 · P1 · Reviewer queue ordered by match</span>
+      <p><strong>No separate number.</strong> The queue is how the 165 hours from the match count are actually realized, so I have not counted it twice.</p></div>
+    <div id="calc-4"><span class="label">4 · P1 · Filter and "how applying works" note</span>
+      <p><strong>Not sized.</strong> Return = visitors who click Apply × share who leave at the login box × share recovered. It needs Turing's funnel data.</p></div>
+    <div id="calc-5"><span class="label">5 · P2 · Alerts when a new role matches</span>
+      <p><strong>Not sized.</strong> Return = roles filled by returning experts × about $300 not spent finding a new one. It needs the repeat-visit rate.</p></div>
+    <div id="calc-6"><span class="label">6 · P2 · Role pages on Google</span>
+      <div class="calc">
+        <div class="row"><span>Placements a month found through search, not a referral</span><b>50</b></div>
+        <div class="row"><span>Average referral bonus, from the 11 I saw on the site</span><b>$300</b></div>
+        <div class="row total"><span>Referral bonuses avoided</span><b>about $15,000 a month</b></div>
+      </div>
+      <p class="muted">The 50 is my assumption.</p></div>
+  </div>
+</section>
+
 <section>
   <div class="two">
     <div>
@@ -490,11 +524,14 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
         <li><strong>Leading signal:</strong> eligible applications per role in its first 7 days.</li>
         <li><strong>Cost:</strong> reviewer hours and acquisition spend per accepted expert.</li>
         <li><strong>Guardrail:</strong> share of applications rejected for eligibility must fall.</li>
+        <li><strong>Test design:</strong> by role, on half of a matched set of roles. If "5 of 5" is not accepted far more often than "2 of 5", the score is wrong.</li>
       </ul>
     </div>
     <div>
-      <h2>What I could not see</h2>
+      <h2>Risks, and what I could not see</h2>
       <ul>
+        <li>A wrong low score could put off a good candidate, which is why nobody is blocked from applying.</li>
+        <li>Clients may not allow pay to be shown. In that case the role shows a band.</li>
         <li>Turing's numbers. The size of each bet is a hypothesis, and the link to revenue runs through supply and fill time. I have not measured it.</li>
         <li>The flow after sign-up. I did not create an account.</li>
         <li>Whether pay and indexing are restricted by client contracts.</li>
